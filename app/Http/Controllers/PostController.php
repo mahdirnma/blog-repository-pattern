@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Tag;
 use App\Repository\PostRepository;
 use App\Services\LogService;
 use Illuminate\Routing\Controller;
@@ -23,7 +25,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = $this->postRepository->all();
-        $this->log('all','get All Posts');
+        $this->log('all','get All Posts')->create();
         return view('admin.posts.index',compact('posts'));
     }
 
@@ -32,7 +34,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::where('is_active',1)->get();
+        $tags=Tag::where('is_active',1)->get();
+        return view('admin.posts.create',compact('tags','categories'));
     }
 
     /**
@@ -40,7 +44,13 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        $post= $this->postRepository->create($request->except('tags'));
+        $post->tags()->attach($request->tags);
+        $this->log('create','Post created')->create();
+        if($post){
+            return redirect()->route('posts.index');
+        }
+        return redirect()->back();
     }
 
     /**
