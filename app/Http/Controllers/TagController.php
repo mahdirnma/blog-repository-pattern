@@ -20,7 +20,7 @@ class TagController extends Controller
     public function index()
     {
         $tags = $this->repository->all();
-        $this->log('all','get All Tags');
+        $this->log('all','get All Tags')->create();
         return view('admin.tags.index',compact('tags'));
     }
 
@@ -29,7 +29,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tags.create');
     }
 
     /**
@@ -37,7 +37,12 @@ class TagController extends Controller
      */
     public function store(StoreTagRequest $request)
     {
-        //
+        $tag = $this->repository->create($request->validated());
+        $this->log('create','create Tag')->create();
+        if($tag){
+            return redirect()->route('tags.index');
+        }
+        return redirect()->route('tags.create');
     }
 
     /**
