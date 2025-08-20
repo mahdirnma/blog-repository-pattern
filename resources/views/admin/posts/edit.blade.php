@@ -42,17 +42,6 @@
                             @enderror
                         </div>
                         <div class="w-5/6 h-auto flex flex-row-reverse justify-between pt-4 mb-6">
-                            <label for="writer" class="font-semibold ml-5">: writer</label>
-                            <select name="writer_id" id="writer" class="w-2/5 h-8 rounded outline-0 pb-2 pt-1 px-2 border border-gray-400">
-                                @foreach($writers as $writer)
-                                    <option value="{{$writer->id}}" {{$writer->id==$post->user_id?'selected':''}}>{{$writer->name}}</option>
-                                @endforeach
-                            </select>
-                            @error('writer')
-                            <p class="text-red-700">{{$message}}</p>
-                            @enderror
-                        </div>
-                        <div class="w-5/6 h-auto flex flex-row-reverse justify-between pt-4 mb-6">
                             <p class="font-semibold ml-5">: tags</p>
                             @foreach($tags as $tag)
                                 <label for="">

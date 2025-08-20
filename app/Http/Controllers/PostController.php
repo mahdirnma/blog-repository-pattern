@@ -66,7 +66,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $categories = Category::where('is_active',1)->get();
+        $tags=Tag::where('is_active',1)->get();
+        return view('admin.posts.edit',compact('post','categories','tags'));
     }
 
     /**
@@ -74,7 +76,13 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $status=$this->postRepository->update($request->except('tags'),$post);
+        $post->tags()->sync($request->tags);
+        $this->log('update','Post updated')->create();
+        if($status){
+            return redirect()->route('posts.index');
+        }
+        return redirect()->back();
     }
 
     /**
