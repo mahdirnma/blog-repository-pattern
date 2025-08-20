@@ -5,15 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Repository\PostRepository;
+use App\Services\LogService;
+use Illuminate\Routing\Controller;
 
 class PostController extends Controller
 {
+    public function __construct(protected PostRepository $postRepository){}
+
+    public function log(string $action,string $description)
+    {
+        return new LogService($action,'Post',$description);
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $posts = $this->postRepository->all();
+        $this->log('all','get All Posts');
+        return view('admin.posts.index',compact('posts'));
     }
 
     /**
