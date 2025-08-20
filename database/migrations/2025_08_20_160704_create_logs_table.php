@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
+            $table->string('model');
+            $table->string('action');
+            $table->text('description');
             $table->timestamps();
         });
     }
