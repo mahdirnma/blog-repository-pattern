@@ -4,11 +4,12 @@ namespace App\Repository;
 
 use App\Models\Category;
 use App\Repository\Contracts\CategoryRepositoryInterface;
+use App\Services\LogService;
 use Illuminate\Database\Eloquent\Collection;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
-    public function __construct(private Category $category){}
+    public function __construct(protected Category $category){}
 
     public function all(): Collection
     {
