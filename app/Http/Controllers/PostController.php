@@ -90,6 +90,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->tags()->detach();
+        $this->postRepository->delete($post);
+        $this->log('delete','Post deleted')->create();
+        return redirect()->route('posts.index');
     }
 }
