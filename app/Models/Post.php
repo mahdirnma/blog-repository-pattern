@@ -15,9 +15,9 @@ class Post extends Model
         'is_active',
     ];
     public function category(){
-        return $this->belongsTo(CategorySeeder::class);
+        return $this->belongsTo(Category::class);
     }
     public function tags(){
-        return $this->belongsToMany(TagSeeder::class);
+        return $this->belongsToMany(Tag::class);
     }
 }
