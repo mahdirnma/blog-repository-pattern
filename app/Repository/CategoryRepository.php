@@ -27,9 +27,11 @@ class CategoryRepository implements CategoryRepositoryInterface
         return $status?$cat:null;
     }
 
-    public function delete($id): bool
+    public function delete($cat): bool
     {
-        $category=$this->category->find($id);
-        return $category?$category->update(['is_active',0]):false;
+        $status=$cat->update([
+            'is_active'=>0
+        ]);
+        return $status?true:false;
     }
 }

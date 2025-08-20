@@ -83,6 +83,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $this->categoryRepository->delete($category);
+        $this->log('delete','delete Category')->create();
+        return redirect()->route('categories.index');
     }
 }
