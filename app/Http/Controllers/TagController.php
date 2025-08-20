@@ -5,15 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
+use App\Repository\TagRepository;
+use App\Services\LogService;
+use Illuminate\Routing\Controller;
 
 class TagController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(protected TagRepository $repository){}
+
+    public function log(string $action,string $description)
+    {
+        return new LogService($action,'Tag',$description);
+    }
     public function index()
     {
-        //
+        $tags = $this->repository->all();
+        $this->log('all','get All Tags');
+        return view('admin.tags.index',compact('tags'));
     }
 
     /**
