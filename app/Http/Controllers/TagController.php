@@ -79,6 +79,8 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $this->repository->delete($tag);
+        $this->log('delete','delete Tag')->create();
+        return redirect()->route('tags.index');
     }
 }
