@@ -21,10 +21,10 @@ class CategoryRepository implements CategoryRepositoryInterface
         return $this->category->create($data);
     }
 
-    public function update(array $data, $id): ?Category
+    public function update(array $data, $cat): ?Category
     {
-        $category=$this->category->find($id);
-        return $category?$category->update($data):null;
+        $status=$cat->update($data);
+        return $status?$cat:null;
     }
 
     public function delete($id): bool

@@ -43,7 +43,10 @@ class CategoryController extends Controller
     {
         $category=$this->categoryRepository->create($request->all());
         $this->log('create','create Category')->create();
-        return redirect()->route('categories.index');
+        if($category){
+            return redirect()->route('categories.index');
+        }
+        return redirect()->back();
     }
 
     /**
@@ -59,7 +62,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('admin.categories.edit',compact('category'));
     }
 
     /**
@@ -67,7 +70,12 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $status=$this->categoryRepository->update($request->all(),$category);
+        $this->log('update','update Category')->create();
+        if($status){
+            return redirect()->route('categories.index');
+        }
+        return redirect()->back();
     }
 
     /**
