@@ -12,7 +12,7 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function all(): Collection
     {
-        return $this->category->where('is_active',1)->paginate(2);
+        return $this->category->where('is_active',1)->get();
     }
 
     public function create(array $data): Category
